@@ -15,6 +15,17 @@ function App() {
     (fighter) => fighter.weight_class === "P4P" && fighter.ranking === 1,
   );
 
+  const weightClasses = [
+    "Flyweight",
+    "Bantamweight",
+    "Featherweight",
+    "Lightweight",
+    "Welterweight",
+    "Middleweight",
+    "Light Heavyweight",
+    "Heavyweight",
+  ];
+
   return (
     <div className="min-h-screen bg-neutral-900 text-white p-8">
       <h1
@@ -24,19 +35,20 @@ function App() {
         THE CAGE
       </h1>
 
-      <div className="flex gap-4 justify-center mb-8">
-        <button
-          onClick={() => setActiveCategory("Lightweight")}
-          className="bg-neutral-800 px-4 py-2 rounded-lg hover:bg-red-500 font-bold transition-colors"
-        >
-          Lightweight
-        </button>
-        <button
-          onClick={() => setActiveCategory("Heavyweight")}
-          className="bg-neutral-800 px-4 py-2 rounded-lg hover:bg-red-500 font-bold transition-colors"
-        >
-          Heavyweight
-        </button>
+      <div className="flex flex-wrap gap-4 justify-center mb-8">
+        {weightClasses.map((category) => (
+          <button
+            key={category}
+            onClick={() => setActiveCategory(category)}
+            className={`px-4 py-2 rounded-lg font-bold transition-colors ${
+              activeCategory === category
+                ? "bg-red-500 text-white"
+                : "bg-neutral-800 text-neutral-300 hover:bg-red-500 hover:text-white"
+            }`}
+          >
+            {category}
+          </button>
+        ))}
       </div>
 
       {activeCategory === "HOME" ? (
@@ -114,7 +126,8 @@ function App() {
                 </p>
                 <div className="flex justify-between items-center bg-neutral-900 rounded-lg p-3 mb-4 border border-neutral-700">
                   <span className="font-medium text-amber-400">
-                    🏆 Rank: {fighter.ranking}
+                    🏆 Rank:{" "}
+                    {fighter.ranking === 0 ? "Champion" : fighter.ranking}
                   </span>
                   <span className="font-bold text-orange-500 text-lg">
                     🔥 Hype: {fighter.hype_score}
