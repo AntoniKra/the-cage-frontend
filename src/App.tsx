@@ -3,7 +3,7 @@ import { useFighters } from "./useFighters";
 
 function App() {
   const { fighters, addHype } = useFighters();
-  const [activeCategory, setActiveCategory] = useState("HOME");
+  const [activeCategory, setActiveCategory] = useState("P4P");
 
   const filteredFighters = useMemo(() => {
     return fighters.filter(
@@ -11,25 +11,25 @@ function App() {
     );
   }, [fighters, activeCategory]);
 
-  const p4pNumberOne = fighters.find(
-    (fighter) => fighter.weight_class === "P4P" && fighter.ranking === 1,
-  );
-
   const weightClasses = [
     "Flyweight",
     "Bantamweight",
     "Featherweight",
     "Lightweight",
+    "P4P",
     "Welterweight",
     "Middleweight",
     "Light Heavyweight",
     "Heavyweight",
   ];
 
+  const topFighters = filteredFighters.slice(0, 3);
+  const restFighters = filteredFighters.slice(3);
+
   return (
     <div className="min-h-screen bg-neutral-900 text-white p-8">
       <h1
-        onClick={() => setActiveCategory("HOME")}
+        onClick={() => setActiveCategory("P4P")}
         className="text-4xl font-black text-center mb-10 text-red-500 tracking-tight cursor-pointer hover:scale-105 transition-transform"
       >
         THE CAGE
@@ -51,99 +51,112 @@ function App() {
         ))}
       </div>
 
-      {activeCategory === "HOME" ? (
-        <div className="flex flex-col items-center w-full">
-          <div className="min-h-[80vh] flex flex-col items-center justify-center w-full bg-gradient-to-b from-neutral-900 to-black rounded-3xl mb-16 shadow-2xl border border-neutral-800">
-            <h2 className="text-6xl md:text-8xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-amber-500 mb-6 drop-shadow-lg text-center">
-              Champion Ranking
-            </h2>
-            <p className="text-xl text-neutral-400 animate-pulse">
-              Zjedź w dół, aby poznać króla oktagonu ↓
-            </p>
-          </div>
-
-          {p4pNumberOne && (
-            <div className="w-full max-w-2xl transform hover:scale-105 transition-transform duration-500 mb-10">
-              <div className="relative bg-neutral-800 rounded-3xl shadow-[0_0_40px_rgba(239,68,68,0.2)] overflow-hidden border-2 border-red-500">
-                <div className="absolute top-4 right-4 bg-red-600 text-white font-black px-6 py-2 rounded-full z-10 shadow-lg text-xl uppercase tracking-wider">
-                  #1 P4P King 👑
-                </div>
-                <img
-                  src={p4pNumberOne.image_url}
-                  alt={p4pNumberOne.name}
-                  className="w-full h-[500px] object-cover object-top"
-                  onError={(e) => {
-                    e.currentTarget.src = "/images/default.png";
-                  }}
-                />
-                <div className="p-8 text-center">
-                  <h3 className="text-5xl font-black mb-2">
-                    {p4pNumberOne.name}
-                  </h3>
-                  <p className="text-red-500 font-bold text-xl uppercase tracking-widest mb-8">
-                    {p4pNumberOne.record || "Brak rekordu"}
-                  </p>
-
-                  <div className="flex justify-center gap-12 items-center bg-neutral-900 rounded-2xl p-6 mb-8 border border-neutral-700">
-                    <span className="font-bold text-amber-400 text-2xl">
-                      🏆 Rank: {p4pNumberOne.ranking}
-                    </span>
-                    <span className="font-black text-orange-500 text-3xl">
-                      🔥 Hype: {p4pNumberOne.hype_score}
-                    </span>
-                  </div>
-
-                  <button
-                    className="w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-black py-5 px-6 rounded-xl shadow-lg transition-transform transform hover:-translate-y-1 active:translate-y-0 text-2xl uppercase tracking-wider"
-                    onClick={() => addHype(p4pNumberOne.id)}
-                  >
-                    Daj Hype Królowi!
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredFighters.map((fighter) => (
+      <div className="flex flex-col gap-12 w-full mt-8">
+        <div className="flex justify-center items-center gap-8 pt-10">
+          {topFighters.map((fighter, index) => (
             <div
               key={fighter.id}
-              className="bg-neutral-800 rounded-2xl shadow-xl overflow-hidden border border-neutral-700 hover:border-red-500 transition-colors duration-300"
+              className={`relative bg-neutral-800/50 rounded-2xl shadow-2xl overflow-hidden border transition-all duration-300 flex flex-col ${
+                index === 0
+                  ? "border-amber-400 border-2 transform scale-105 z-10 w-80 order-2"
+                  : index === 1
+                    ? "border-neutral-700 hover:border-red-500 mt-12 w-72 order-1"
+                    : "border-neutral-700 hover:border-red-500 mt-12 w-72 order-3"
+              }`}
             >
+              {index === 0 && (
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-amber-400 text-black font-black px-6 py-1 rounded-b-xl z-20 text-sm tracking-widest">
+                  CHAMPION
+                </div>
+              )}
+
+              <div className="absolute top-4 left-4 bg-red-600/90 text-white font-black px-3 py-1 rounded-lg z-10 text-sm italic">
+                #{index === 0 ? "C" : index}
+              </div>
+
               <img
                 src={fighter.image_url}
                 alt={fighter.name}
-                className="w-full h-64 object-cover object-top"
+                className="w-full h-80 object-cover object-top filter contrast-125"
                 onError={(e) => {
                   e.currentTarget.src = "/images/default.png";
                 }}
               />
-              <div className="p-5">
-                <h2 className="text-2xl font-bold mb-1">{fighter.name}</h2>
-                <p className="text-neutral-400 text-sm font-semibold mb-4 uppercase tracking-wider">
-                  {fighter.weight_class}
+
+              <div className="p-6 text-center">
+                <p className="text-red-500 text-xs font-bold mb-1 tracking-widest">
+                  {index === 0 ? "TITLE HOLDER" : "CONTENDER"}
                 </p>
-                <div className="flex justify-between items-center bg-neutral-900 rounded-lg p-3 mb-4 border border-neutral-700">
-                  <span className="font-medium text-amber-400">
-                    🏆 Rank:{" "}
-                    {fighter.ranking === 0 ? "Champion" : fighter.ranking}
+                <h2
+                  className={`font-black mb-4 ${index === 0 ? "text-3xl italic" : "text-2xl"}`}
+                >
+                  {fighter.name}
+                </h2>
+
+                <div className="flex justify-between items-center text-sm font-semibold text-neutral-400 border-t border-neutral-700 pt-4 mt-2">
+                  <span className="flex items-center gap-2">
+                    🔥 {fighter.hype_score} Hype
                   </span>
-                  <span className="font-bold text-orange-500 text-lg">
-                    🔥 Hype: {fighter.hype_score}
-                  </span>
+                  <span>{fighter.record || "0-0-0"}</span>
                 </div>
+
                 <button
-                  className="w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-transform transform hover:-translate-y-1 active:translate-y-0"
+                  className="w-full mt-6 bg-transparent border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors"
                   onClick={() => addHype(fighter.id)}
                 >
-                  Daj Hype!
+                  HYPE
                 </button>
               </div>
             </div>
           ))}
         </div>
-      )}
+
+        <div className="flex flex-col gap-3 w-full max-w-4xl mx-auto pb-20">
+          {restFighters.map((fighter, index) => (
+            <div
+              key={fighter.id}
+              className="flex justify-between items-center bg-neutral-800/40 hover:bg-neutral-800/80 transition-colors border border-neutral-700/50 rounded-xl p-4"
+            >
+              <div className="flex items-center gap-6">
+                <span className="text-2xl font-black text-neutral-500 italic w-8">
+                  #{index + 3}
+                </span>
+
+                <div className="flex flex-col">
+                  <span className="text-xl font-bold">{fighter.name}</span>
+                  <div className="flex items-center gap-2 text-sm text-neutral-400 mt-1">
+                    {fighter.country_code && (
+                      <img
+                        src={`https://flagcdn.com/w20/${fighter.country_code.toLowerCase()}.png`}
+                        alt={fighter.country_code}
+                        className="w-5 rounded-sm"
+                      />
+                    )}
+                    <span>{fighter.country_code}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-8">
+                <div className="text-neutral-300 font-semibold tracking-widest text-sm">
+                  {fighter.record || "0-0-0"}
+                </div>
+
+                <div className="text-orange-500 font-bold flex items-center gap-1 w-24 justify-end">
+                  🔥 {fighter.hype_score}
+                </div>
+
+                <button
+                  onClick={() => addHype(fighter.id)}
+                  className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-5 py-2 rounded-lg font-bold transition-colors text-sm  tracking-wider"
+                >
+                  HYPE
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
