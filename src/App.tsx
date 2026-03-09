@@ -52,20 +52,20 @@ function App() {
       </div>
 
       <div className="flex flex-col gap-12 w-full mt-8">
-        <div className="flex justify-center items-center gap-8 pt-10">
+        <div className="flex justify-center items-center gap-14 pt-10">
           {topFighters.map((fighter, index) => (
             <div
               key={fighter.id}
               className={`relative bg-neutral-800/50 rounded-2xl shadow-2xl overflow-hidden border transition-all duration-300 flex flex-col ${
                 index === 0
-                  ? "border-amber-400 border-2 transform scale-105 z-10 w-80 order-2"
+                  ? "border-[#D4AF37] border-2 transform scale-110 z-10 w-85 order-2 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]"
                   : index === 1
-                    ? "border-neutral-700 hover:border-red-500 mt-12 w-72 order-1"
-                    : "border-neutral-700 hover:border-red-500 mt-12 w-72 order-3"
+                    ? "border-neutral-700 hover:border-red-500 mt-12 w-76 order-1 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
+                    : "border-neutral-700 hover:border-red-500 mt-12 w-76 order-3 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
               }`}
             >
               {index === 0 && (
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-amber-400 text-black font-black px-6 py-1 rounded-b-xl z-20 text-sm tracking-widest">
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-[#D4AF37] text-black font-black px-6 py-1 rounded-b-xl z-20 text-sm tracking-widest">
                   CHAMPION
                 </div>
               )}
@@ -77,7 +77,7 @@ function App() {
               <img
                 src={fighter.image_url}
                 alt={fighter.name}
-                className="w-full h-80 object-cover object-top filter contrast-125"
+                className="w-[calc(100%-2rem)] h-80 mx-auto mt-10 mb-2 object-cover object-top filter contrast-125 rounded-xl"
                 onError={(e) => {
                   e.currentTarget.src = "/images/default.png";
                 }}
@@ -93,18 +93,32 @@ function App() {
                   {fighter.name}
                 </h2>
 
-                <div className="flex justify-between items-center text-sm font-semibold text-neutral-400 border-t border-neutral-700 pt-4 mt-2">
+                <div className="flex justify-between items-center text-sm font-semibold text-neutral-400 border-t border-neutral-700 pt-4 pb-4 mt-auto">
                   <span className="flex items-center gap-2">
-                    🔥 {fighter.hype_score} Hype
+                    {fighter.country_code && (
+                      <img
+                        src={`https://flagcdn.com/w20/${fighter.country_code.toLowerCase()}.png`}
+                        alt={fighter.country_code}
+                        className="h-4 rounded-sm object-cover opacity-90"
+                      />
+                    )}
+                    <span className="text-neutral-300 font-bold">
+                      {fighter.country_code}
+                    </span>
                   </span>
-                  <span>{fighter.record || "0-0-0"}</span>
+                  <span className="tracking-wider">
+                    {fighter.record || "0-0-0"}
+                  </span>
                 </div>
 
                 <button
-                  className="w-full mt-6 bg-transparent border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                  className="cursor-pointer w-full bg-neutral-900 border border-red-500/50 text-red-500 hover:bg-red-500 hover:text-white font-bold py-2.5 px-4 rounded-lg transition-all duration-300 shadow-[0_0_15px_rgba(239,68,68,0.1)] hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] flex justify-center items-center gap-2 group"
                   onClick={() => addHype(fighter.id)}
                 >
-                  HYPE
+                  <span>HYPE</span>
+                  <span className="bg-red-500/10 group-hover:bg-white/20 px-2 py-0.5 rounded-md text-sm transition-colors">
+                    🔥 {fighter.hype_score}
+                  </span>
                 </button>
               </div>
             </div>
@@ -148,7 +162,7 @@ function App() {
 
                 <button
                   onClick={() => addHype(fighter.id)}
-                  className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-5 py-2 rounded-lg font-bold transition-colors text-sm  tracking-wider"
+                  className="cursor-pointer border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-5 py-2 rounded-lg font-bold transition-colors text-sm  tracking-wider"
                 >
                   HYPE
                 </button>
