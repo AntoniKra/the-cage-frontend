@@ -28,22 +28,35 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-900 text-white p-8">
-      <h1
+      <div
         onClick={() => setActiveCategory("P4P")}
-        className="text-4xl font-black text-center mb-10 text-red-500 tracking-tight cursor-pointer hover:scale-105 transition-transform"
+        className="flex justify-center items-center gap-3 mb-12 mt-4 cursor-pointer group"
       >
-        THE CAGE
-      </h1>
+        <svg
+          viewBox="0 0 24 24"
+          className="w-8 h-8 text-red-500 group-hover:scale-110 transition-transform duration-300"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+        </svg>
+        <h1 className="text-3xl font-black italic tracking-widest text-white mb-0.5">
+          HYPE CAGE
+        </h1>
+      </div>
 
-      <div className="flex flex-wrap gap-4 justify-center mb-8">
+      <div className="flex flex-wrap gap-6 justify-center mb-16">
         {weightClasses.map((category) => (
           <button
             key={category}
             onClick={() => setActiveCategory(category)}
-            className={`px-4 py-2 rounded-lg font-bold transition-colors ${
+            className={`cursor-pointer px-6 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all duration-100 ease-out ${
               activeCategory === category
-                ? "bg-red-500 text-white"
-                : "bg-neutral-800 text-neutral-300 hover:bg-red-500 hover:text-white"
+                ? "border border-red-500 bg-red-500/10 text-white shadow-[0_0_150px_rgba(239,68,68,0.9),0_0_350px_rgba(239,68,68,0.7),0_0_600px_rgba(239,68,68,0.5),0_0_900px_rgba(239,68,68,0.3)] "
+                : "text-neutral-400 hover:text-white"
             }`}
           >
             {category}
@@ -60,8 +73,8 @@ function App() {
                 index === 0
                   ? "border-[#D4AF37] border-2 transform scale-110 z-10 w-85 order-2 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]"
                   : index === 1
-                    ? "border-neutral-700 hover:border-red-500 mt-12 w-76 order-1 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
-                    : "border-neutral-700 hover:border-red-500 mt-12 w-76 order-3 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
+                    ? "border-neutral-700 hover:border-red-500 mt-12 w-80 order-1 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
+                    : "border-neutral-700 hover:border-red-500 mt-12 w-80 order-3 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
               }`}
             >
               {index === 0 && (
@@ -156,7 +169,7 @@ function App() {
                   {fighter.record || "0-0-0"}
                 </div>
 
-                <div className="text-orange-500 font-bold flex items-center gap-1 w-24 justify-end">
+                <div className="text-orange-500 font-bold flex items-center gap-1  justify-end">
                   🔥 {fighter.hype_score}
                 </div>
 
