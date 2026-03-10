@@ -17,29 +17,38 @@ export const useFighters = () => {
   const [fighters, setFighters] = useState<Fighter[]>([]);
 
   useEffect(() => {
-    fetch(API_URL, {
-      method: "GET",
-      headers: { Accept: "application/json" },
-    })
-      .then((response) => response.json())
-      .then((data) => setFighters(data))
-      .catch((error) => console.error("Błąd pobierania danych:", error));
+    const fetchFighters = async () => {
+      try {
+        const response = await fetch(API_URL, {
+          method: "GET",
+          headers: { Accept: "application/json" },
+        });
+        const data = await response.json();
+        setFighters(data);
+      } catch (error) {
+        console.error("Błąd pobierania danych:", error);
+      }
+    };
+
+    fetchFighters();
   }, []);
 
-  const addHype = (id: number) => {
-    fetch(`${API_URL}/${id}/hype`, {
-      method: "PATCH",
-      headers: { Accept: "application/json" },
-    })
-      .then((response) => response.json())
-      .then((updatedFighter) => {
-        setFighters((prevFighters) =>
-          prevFighters.map((fighter) =>
-            fighter.id === id ? updatedFighter : fighter,
-          ),
-        );
-      })
-      .catch((error) => console.error("Błąd podbijania hype'u:", error));
+  const addHype = async (id: number) => {
+    try {
+      const response = await fetch(`${API_URL}/${id}/hype`, {
+        method: "PATCH",
+        headers: { Accept: "application/json" },
+      });
+      const updatedFighter = await response.json();
+
+      setFighters((prevFighters) =>
+        prevFighters.map((fighter) =>
+          fighter.id === id ? updatedFighter : fighter,
+        ),
+      );
+    } catch (error) {
+      console.error("Błąd podbijania hype'u:", error);
+    }
   };
 
   return { fighters, addHype };
