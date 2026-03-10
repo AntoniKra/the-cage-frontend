@@ -95,6 +95,7 @@ Projekt jest stale rozwijany. Planowane wdrożenia obejmują:
 
 
 ## 📦 Instalacja i Uruchomienie
+Wymagana wersja node 24.12
 1. Sklonuj repozytorium.
 2. Zainstaluj zależności: `npm install`
 3. Uruchom serwer deweloperski: `npm run dev`
