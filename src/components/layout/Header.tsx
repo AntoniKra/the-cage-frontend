@@ -1,6 +1,6 @@
-import { MenuIcon } from "./icons/MenuIcon";
-import { LogoIcon } from "./icons/LogoIcon";
-import { PlusIcon } from "./icons/PlusIcon";
+import { MenuIcon } from "../icons/MenuIcon";
+import { LogoIcon } from "../icons/LogoIcon";
+import { PlusIcon } from "../icons/PlusIcon";
 
 interface HeaderProps {
   onMenuClick: () => void;

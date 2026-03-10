@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
-import { useFighters } from "./useFighters";
-import { ProposeFighterModal } from "./components/ProposeFighterModal";
-import { FighterCard } from "./components/FighterCard";
-import { FighterRow } from "./components/FighterRow";
-import { Sidebar } from "./components/Sidebar";
-import { Header } from "./components/header";
+import { useFighters } from "./hooks/useFighters";
+import { ProposeFighterModal } from "./components/modals/ProposeFighterModal";
+import { FighterCard } from "./components/fighters/FighterCard";
+import { FighterRow } from "./components/fighters/FighterRow";
+import { Sidebar } from "./components/layout/Sidebar";
+import { Header } from "./components/layout/Header";
 
 function App() {
   const { fighters, addHype } = useFighters();

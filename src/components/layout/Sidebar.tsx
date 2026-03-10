@@ -1,5 +1,5 @@
-import { CloseIcon } from "./icons/CloseIcon";
-import { PlusIcon } from "./icons/PlusIcon";
+import { CloseIcon } from "../icons/CloseIcon";
+import { PlusIcon } from "../icons/PlusIcon";
 
 interface SidebarProps {
   isOpen: boolean;

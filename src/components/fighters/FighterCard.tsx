@@ -1,4 +1,4 @@
-import { Fighter } from "../useFighters";
+import { Fighter } from "../../hooks/useFighters";
 
 interface FighterCardProps {
   fighter: Fighter;

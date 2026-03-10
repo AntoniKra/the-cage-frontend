@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { CloseIcon } from "./icons/CloseIcon";
-import { ChevronDownIcon } from "./icons/ChevronDownIcon";
-import { SubmitIcon } from "./icons/SubmitIcon";
-
+import { CloseIcon } from "../icons/CloseIcon";
+import { ChevronDownIcon } from "../icons/ChevronDownIcon";
+import { SubmitIcon } from "../icons/SubmitIcon";
 interface ProposeFighterModalProps {
   onClose: () => void;
 }
