@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { useFighters } from "./useFighters";
+import { PlusIcon } from "./components/icons/PlusIcon";
+import { LogoIcon } from "./components/icons/LogoIcon";
 
 function App() {
   const { fighters, addHype } = useFighters();
@@ -28,44 +30,55 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-900 text-white p-8">
-      <div
-        onClick={() => setActiveCategory("P4P")}
-        className="flex justify-center items-center gap-3 mb-12 mt-4 cursor-pointer group"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          className="w-8 h-8 text-red-500 group-hover:scale-110 transition-transform duration-300"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-        </svg>
-        <h1 className="text-3xl font-black italic tracking-widest text-white mb-0.5">
-          HYPE CAGE
-        </h1>
+      <div className="w-full max-w-[1450px] mx-auto">
+        <div className="flex justify-center md:grid md:grid-cols-3 items-center mb-12 mt-4">
+          <div className="hidden md:block"></div>
+
+          <div
+            onClick={() => setActiveCategory("P4P")}
+            className="flex justify-center items-center gap-3 cursor-pointer group md:justify-self-center"
+          >
+            <LogoIcon />
+            <h1 className="text-3xl font-black italic tracking-widest text-white mb-0.5">
+              HYPE CAGE
+            </h1>
+          </div>
+
+          <div className="hidden md:flex justify-end">
+            <button className="cursor-pointer rounded-md flex items-center gap-2 bg-red-600/90 hover:bg-red-500 text-white font-black px-4 py-2 transition-transform hover:scale-105">
+              <PlusIcon />
+              <span className="text-sm tracking-widest uppercase">
+                Propose Fighter
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-6 justify-center mb-30">
+          {weightClasses.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={`cursor-pointer px-6 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all duration-100 ease-out ${
+                activeCategory === category
+                  ? "border border-red-500 bg-red-500/10 text-white shadow-[0_0_150px_rgba(239,68,68,0.9),0_0_350px_rgba(239,68,68,0.7),0_0_600px_rgba(239,68,68,0.5),0_0_900px_rgba(239,68,68,0.3)] "
+                  : "text-neutral-400 hover:text-white"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-6 justify-center mb-16">
-        {weightClasses.map((category) => (
-          <button
-            key={category}
-            onClick={() => setActiveCategory(category)}
-            className={`cursor-pointer px-6 py-2.5 rounded-xl font-bold text-sm tracking-wide transition-all duration-100 ease-out ${
-              activeCategory === category
-                ? "border border-red-500 bg-red-500/10 text-white shadow-[0_0_150px_rgba(239,68,68,0.9),0_0_350px_rgba(239,68,68,0.7),0_0_600px_rgba(239,68,68,0.5),0_0_900px_rgba(239,68,68,0.3)] "
-                : "text-neutral-400 hover:text-white"
-            }`}
-          >
-            {category}
-          </button>
-        ))}
+      <div className="w-full text-center mt-4 mb-8 md:mb-0">
+        <h2 className="text-3xl md:text-5xl font-black italic text-white tracking-[0.2em] uppercase drop-shadow-lg transition-all duration-300">
+          {activeCategory}
+        </h2>
       </div>
 
       <div className="flex flex-col gap-12 w-full mt-8">
-        <div className="flex justify-center items-center gap-14 pt-10">
+        <div className="flex justify-center items-center gap-16 pt-10">
           {topFighters.map((fighter, index) => (
             <div
               key={fighter.id}
@@ -138,7 +151,7 @@ function App() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-3 w-full max-w-4xl mx-auto pb-20">
+        <div className="flex flex-col gap-3 w-full max-w-4xl mx-auto pb-20 mt-12">
           {restFighters.map((fighter, index) => (
             <div
               key={fighter.id}
