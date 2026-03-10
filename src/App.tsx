@@ -2,10 +2,12 @@ import { useMemo, useState } from "react";
 import { useFighters } from "./useFighters";
 import { PlusIcon } from "./components/icons/PlusIcon";
 import { LogoIcon } from "./components/icons/LogoIcon";
+import { ProposeFighterModal } from "./components/ProposeFighterModal";
 
 function App() {
   const { fighters, addHype } = useFighters();
   const [activeCategory, setActiveCategory] = useState("P4P");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredFighters = useMemo(() => {
     return fighters.filter(
@@ -45,7 +47,10 @@ function App() {
           </div>
 
           <div className="hidden md:flex justify-end">
-            <button className="cursor-pointer rounded-md flex items-center gap-2 bg-red-600/90 hover:bg-red-500 text-white font-black px-4 py-2 transition-transform hover:scale-105">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="cursor-pointer rounded-md flex items-center gap-2 bg-red-600/90 hover:bg-red-500 text-white font-black px-4 py-2 transition-transform hover:scale-105"
+            >
               <PlusIcon />
               <span className="text-sm tracking-widest uppercase">
                 Propose Fighter
@@ -197,6 +202,9 @@ function App() {
           ))}
         </div>
       </div>
+      {isModalOpen && (
+        <ProposeFighterModal onClose={() => setIsModalOpen(false)} />
+      )}
     </div>
   );
 }
