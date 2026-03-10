@@ -75,7 +75,7 @@ export const ProposeFighterModal = ({ onClose }: ProposeFighterModalProps) => {
 
         <div className="bg-[#0a0a0a] p-8 pb-6 border-b border-neutral-800">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-[3px] bg-red-600"></div>
+            <div className="w-8 h-0.75 bg-red-600"></div>
             <span className="text-red-500 text-[10px] font-black tracking-widest uppercase">
               Scouting Department
             </span>

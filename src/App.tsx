@@ -2,12 +2,15 @@ import { useMemo, useState } from "react";
 import { useFighters } from "./useFighters";
 import { PlusIcon } from "./components/icons/PlusIcon";
 import { LogoIcon } from "./components/icons/LogoIcon";
+import { MenuIcon } from "./components/icons/MenuIcon";
+import { CloseIcon } from "./components/icons/CloseIcon";
 import { ProposeFighterModal } from "./components/ProposeFighterModal";
 
 function App() {
   const { fighters, addHype } = useFighters();
   const [activeCategory, setActiveCategory] = useState("P4P");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const filteredFighters = useMemo(() => {
     return fighters.filter(
@@ -32,24 +35,31 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-900 text-white p-8">
-      <div className="w-full max-w-[1450px] mx-auto">
-        <div className="flex justify-center md:grid md:grid-cols-3 items-center mb-12 mt-4">
-          <div className="hidden md:block"></div>
+      <div className="w-full max-w-362.5 mx-auto">
+        <div className="flex items-center w-full mb-12 mt-4">
+          <div className="flex-1 flex justify-start">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden text-white hover:text-red-500 transition-colors cursor-pointer"
+            >
+              <MenuIcon />
+            </button>
+          </div>
 
           <div
             onClick={() => setActiveCategory("P4P")}
-            className="flex justify-center items-center gap-3 cursor-pointer group md:justify-self-center"
+            className="flex justify-center items-center gap-3 cursor-pointer group"
           >
             <LogoIcon />
-            <h1 className="text-3xl font-black italic tracking-widest text-white mb-0.5">
+            <h1 className="text-3xl font-black italic tracking-widest text-white mb-0.5 whitespace-nowrap">
               HYPE CAGE
             </h1>
           </div>
 
-          <div className="hidden md:flex justify-end">
+          <div className="flex-1 flex justify-end">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="cursor-pointer rounded-md flex items-center gap-2 bg-red-600/90 hover:bg-red-500 text-white font-black px-4 py-2 transition-transform hover:scale-105"
+              className="hidden md:flex cursor-pointer rounded-md items-center gap-2 bg-red-600/90 hover:bg-red-500 text-white font-black px-4 py-2 transition-transform hover:scale-105"
             >
               <PlusIcon />
               <span className="text-sm tracking-widest uppercase">
@@ -59,7 +69,7 @@ function App() {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-6 justify-center mb-30">
+        <div className="hidden md:flex flex-wrap gap-6 justify-center mb-30">
           {weightClasses.map((category) => (
             <button
               key={category}
@@ -83,16 +93,16 @@ function App() {
       </div>
 
       <div className="flex flex-col gap-12 w-full mt-8">
-        <div className="flex justify-center items-center gap-16 pt-10">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 pt-10">
           {topFighters.map((fighter, index) => (
             <div
               key={fighter.id}
-              className={`relative bg-neutral-800/50 rounded-2xl shadow-2xl overflow-hidden border transition-all duration-300 flex flex-col ${
+              className={`relative bg-neutral-800/50 rounded-2xl shadow-2xl overflow-hidden border transition-all duration-300 flex flex-col w-full max-w-[350px] ${
                 index === 0
-                  ? "border-[#D4AF37] border-2 transform scale-110 z-10 w-85 order-2 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]"
+                  ? "border-[#D4AF37] border-2 md:transform md:scale-110 z-10 md:w-85 order-1 md:order-2 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]"
                   : index === 1
-                    ? "border-neutral-700 hover:border-red-500 mt-12 w-80 order-1 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
-                    : "border-neutral-700 hover:border-red-500 mt-12 w-80 order-3 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
+                    ? "border-neutral-700 hover:border-red-500 md:mt-12 md:w-80 order-2 md:order-1 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
+                    : "border-neutral-700 hover:border-red-500 md:mt-12 md:w-80 order-3 md:order-3 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
               }`}
             >
               {index === 0 && (
@@ -160,21 +170,23 @@ function App() {
           {restFighters.map((fighter, index) => (
             <div
               key={fighter.id}
-              className="flex justify-between items-center bg-neutral-800/40 hover:bg-neutral-800/80 transition-colors border border-neutral-700/50 rounded-xl p-4"
+              className="flex flex-col md:flex-row justify-between md:items-center gap-4 md:gap-0 bg-neutral-800/40 hover:bg-neutral-800/80 transition-colors border border-neutral-700/50 rounded-xl p-4 md:p-5"
             >
-              <div className="flex items-center gap-6">
-                <span className="text-2xl font-black text-neutral-500 italic w-8">
+              <div className="flex items-center gap-4 md:gap-6">
+                <span className="text-xl md:text-2xl font-black text-neutral-500 italic w-6 md:w-8">
                   #{index + 3}
                 </span>
 
                 <div className="flex flex-col">
-                  <span className="text-xl font-bold">{fighter.name}</span>
-                  <div className="flex items-center gap-2 text-sm text-neutral-400 mt-1">
+                  <span className="text-lg md:text-xl font-bold">
+                    {fighter.name}
+                  </span>
+                  <div className="flex items-center gap-2 text-xs md:text-sm text-neutral-400 mt-1">
                     {fighter.country_code && (
                       <img
                         src={`https://flagcdn.com/w20/${fighter.country_code.toLowerCase()}.png`}
                         alt={fighter.country_code}
-                        className="w-5 rounded-sm"
+                        className="w-4 md:w-5 rounded-sm"
                       />
                     )}
                     <span>{fighter.country_code}</span>
@@ -182,18 +194,18 @@ function App() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-8">
-                <div className="text-neutral-300 font-semibold tracking-widest text-sm">
+              <div className="flex items-center justify-between md:justify-end gap-4 md:gap-8 w-full md:w-auto mt-2 md:mt-0 pt-3 md:pt-0 border-t border-neutral-700/50 md:border-none">
+                <div className="text-neutral-300 font-semibold tracking-widest text-xs md:text-sm">
                   {fighter.record || "0-0-0"}
                 </div>
 
-                <div className="text-orange-500 font-bold flex items-center gap-1  justify-end">
+                <div className="text-orange-500 font-bold flex items-center gap-1 text-sm md:text-base">
                   🔥 {fighter.hype_score}
                 </div>
 
                 <button
                   onClick={() => addHype(fighter.id)}
-                  className="cursor-pointer border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-5 py-2 rounded-lg font-bold transition-colors text-sm  tracking-wider"
+                  className="cursor-pointer border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-5 py-2 rounded-lg font-bold transition-colors text-xs md:text-sm tracking-wider"
                 >
                   HYPE
                 </button>
@@ -202,6 +214,65 @@ function App() {
           ))}
         </div>
       </div>
+
+      <div
+        className={`fixed inset-0 bg-black/80 z-40 transition-opacity duration-300 md:hidden ${isSidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        onClick={() => setIsSidebarOpen(false)}
+      ></div>
+
+      <div
+        className={`fixed top-0 left-0 h-full w-70 bg-[#0a0a0a] border-r border-neutral-800 z-50 transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <div className="p-6 border-b border-neutral-800 flex justify-between items-center">
+          <span className="text-xl font-black italic tracking-widest text-white uppercase">
+            Menu
+          </span>
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+            className="text-neutral-500 hover:text-white cursor-pointer"
+          >
+            <CloseIcon />
+          </button>
+        </div>
+
+        <div className="p-6 flex flex-col gap-3 overflow-y-auto grow">
+          <span className="text-neutral-500 text-[10px] font-black tracking-widest uppercase mb-2">
+            Weight Classes
+          </span>
+          {weightClasses.map((category) => (
+            <button
+              key={category}
+              onClick={() => {
+                setActiveCategory(category);
+                setIsSidebarOpen(false);
+              }}
+              className={`text-left px-4 py-3 rounded-lg font-bold tracking-wide transition-colors ${
+                activeCategory === category
+                  ? "bg-red-500/10 text-red-500 border border-red-500/50"
+                  : "text-neutral-400 hover:bg-neutral-800 hover:text-white"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        <div className="p-6 border-t border-neutral-800">
+          <button
+            onClick={() => {
+              setIsSidebarOpen(false);
+              setIsModalOpen(true);
+            }}
+            className="w-full cursor-pointer rounded-md flex items-center justify-center gap-2 bg-red-600/90 hover:bg-red-500 text-white font-black px-4 py-4 transition-transform"
+          >
+            <PlusIcon />
+            <span className="text-sm tracking-widest uppercase">
+              Propose Fighter
+            </span>
+          </button>
+        </div>
+      </div>
+
       {isModalOpen && (
         <ProposeFighterModal onClose={() => setIsModalOpen(false)} />
       )}

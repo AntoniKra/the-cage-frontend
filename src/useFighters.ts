@@ -23,6 +23,9 @@ export const useFighters = () => {
           method: "GET",
           headers: { Accept: "application/json" },
         });
+        if (!response.ok) {
+          throw new Error(`Błąd HTTP! Status: ${response.status}`);
+        }
         const data = await response.json();
         setFighters(data);
       } catch (error) {
@@ -39,6 +42,9 @@ export const useFighters = () => {
         method: "PATCH",
         headers: { Accept: "application/json" },
       });
+      if (!response.ok) {
+        throw new Error(`Błąd HTTP! Status: ${response.status}`);
+      }
       const updatedFighter = await response.json();
 
       setFighters((prevFighters) =>
