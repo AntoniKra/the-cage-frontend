@@ -95,11 +95,17 @@ Projekt jest stale rozwijany. Planowane wdrożenia obejmują:
 
 
 ## 📦 Instalacja i Uruchomienie
-Wymagana wersja node 24.12
-1. Sklonuj repozytorium.
+> 📌 **Wymagania wstępne:** Upewnij się, że posiadasz zainstalowane środowisko **Node.js w wersji minimum 24.12**.
+
+1.  Sklonuj repozytorium i wejdź do folderu:`git clone https://github.com/AntoniKra/the-cage-frontend`
 2. Zainstaluj zależności: `npm install`
-3. Uruchom serwer deweloperski: `npm run dev`
-4. Build produkcyjny: `npm run build`
+3. Konfiguracja API:
+> ⚠️ **Uwaga dotycząca bezpieczeństwa:** W środowisku produkcyjnym adres URL serwera API bezwzględnie powinien być przechowywany w pliku `.env`. Na potrzeby prostszej       konfiguracji w aktualnej wersji deweloperskiej, adres API został zahardcodowany bezpośrednio w kodzie aplikacji. 
+    
+   Przed uruchomieniem upewnij się, że adres API w kodzie odpowiada adresowi, pod którym działa Twój lokalny serwer Laravel (domyślnie `http://localhost:8000`).
+   
+4. Uruchom serwer deweloperski: `npm run dev`
+5. Build produkcyjny: `npm run build`
 Otwórz przeglądarkę pod adresem: `http://localhost:5173`
 
 ---
